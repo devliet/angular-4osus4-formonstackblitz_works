@@ -2,6 +2,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-editor',
@@ -18,9 +19,18 @@ export class ProfileEditorComponent {
       state: [''],
       zip: [''],
     }),
+    aliases: this.fb.array([this.fb.control('')]),
   });
 
   constructor(private fb: FormBuilder) {}
+
+  get aliases() {
+    return this.profileForm.get('aliases') as FormArray;
+  }
+
+  addAliases(){
+    this.aliases.push(this.fb.control(''));
+  }
 
   onSubmit() {
     console.warn(this.profileForm.value);
